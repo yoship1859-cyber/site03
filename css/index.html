@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Souffle（スフル）| がんばらなくても、肌は整う</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F9F7F2;
+            --accent-color: #F2EFE9;
+            --text-color: #4A4A4A;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Shippori Mincho', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .en {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.1em;
+        }
+
+        /* 縦書き */
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* アニメーション */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* First View Background */
+        .hero-bg {
+            position: relative;
+            height: 100vh;
+            background-image: url(./);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-bg::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(249, 247, 242, 0.4) 0%, rgba(249, 247, 242, 0) 100%);
+            z-index: 1;
+        }
+
+        /* Wave Hamburger Menu */
+        .menu-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .menu-trigger-wave {
+            width: 32px;
+            height: 18px;
+            position: relative;
+        }
+
+        .menu-trigger-wave svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--text-color);
+            stroke-width: 1.2;
+            stroke-linecap: round;
+        }
+
+        .wave-path {
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .active .line-top {
+            transform: translateY(4px) rotate(45deg);
+            transform-origin: center;
+            d: path("M0,10 L40,10");
+        }
+        .active .line-bot {
+            transform: translateY(-4px) rotate(-45deg);
+            transform-origin: center;
+            d: path("M0,10 L40,10");
+        }
+
+        /* Fullscreen Overlay Menu */
+        #overlay-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(249, 247, 242, 0.99);
+            z-index: 90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #overlay-menu.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* MOREリンク */
+        .more-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            opacity: 0.6;
+            position: relative;
+        }
+        .more-link::after {
+            content: "";
+            width: 40px;
+            height: 1px;
+            background: var(--text-color);
+            display: block;
+        }
+
+        /* アーチ画像 */
+        .arch-img {
+            border-radius: 500px 500px 0 0;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            background-color: #eeeae3;
+        }
+
+        /* 円形ボタン */
+        .btn-shop-circle {
+            width: 120px;
+            height: 120px;
+            background-color: #A69F92;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            transition: all 0.4s ease;
+        }
+        .btn-shop-circle:hover {
+            background-color: #8c8577;
+            transform: scale(1.05);
+        }
+
+        header {
+            mix-blend-mode: multiply;
+        }
+
+        /* ヒーローライン */
+        .line-draw {
+            width: 1px;
+            height: 100px;
+            background-color: var(--text-color);
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .hero-bg::after {
+                background: rgba(249, 247, 242, 0.6);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-[100] px-8 py-8 flex justify-between items-center">
+        <div class="logo">
+            <span class="en text-xl font-light tracking-[0.2em]">Souffle</span>
+        </div>
+        
+        <div class="menu-container" id="menu-trigger">
+            <div class="menu-trigger-wave">
+                <svg viewBox="0 0 40 20">
+                    <path class="wave-path line-top" d="M0,6 Q5,2 10,6 T20,6 T30,6 T40,6 T50,6" />
+                    <path class="wave-path line-bot" d="M0,14 Q5,10 10,14 T20,14 T30,14 T40,14 T50,14" />
+                </svg>
+            </div>
+            <span class="en text-[12px] font-light">Menu</span>
+        </div>
+    </header>
+
+    <!-- Overlay Menu -->
+    <nav id="overlay-menu">
+        <ul class="text-center space-y-10">
+            <li><a href="#concept" class="en text-2xl font-light tracking-widest menu-link">CONCEPT</a></li>
+            <li><a href="#steps" class="en text-2xl font-light tracking-widest menu-link">STEPS</a></li>
+            <li><a href="#quality" class="en text-2xl font-light tracking-widest menu-link">QUALITY</a></li>
+        </ul>
+        <div class="absolute bottom-16 left-0 w-full text-center">
+            <p class="text-xs opacity-40 tracking-[0.4em]">ほどいて、戻る時間</p>
+        </div>
+    </nav>
+
+    <!-- First View -->
+    <section class="hero-bg px-6 md:px-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 items-center relative z-10">
+            <div class="md:pr-10">
+                <p class="en text-[10px] tracking-[0.4em] opacity-40 mb-10">SOUFFLE SKINCARE</p>
+                <h1 class="text-4xl md:text-6xl leading-[1.4] mb-10">
+                    がんばらなくても、<br>
+                    肌は整う
+                </h1>
+                <p class="text-[11px] md:text-xs opacity-50 tracking-widest mb-12">
+                    疲れた夜でも、さっと整うシンプルなケア。
+                </p>
+                <div class="line-draw"></div>
+            </div>
+            
+            <!-- Vertical Text next to bottle in image -->
+            <div class="hidden md:flex justify-end">
+                <div class="vertical-text text-sm tracking-[1em] opacity-40 mr-12 pt-10">
+                    ほどいて、戻る時間
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empathy Section -->
+    <section id="concept" class="py-40 md:py-60 px-6">
+        <div class="max-w-3xl mx-auto text-center fade-in">
+            <h2 class="text-xl md:text-2xl mb-20 leading-[2.8]">
+                「ちゃんとしたい」その気持ちだけで、<br class="hidden md:block">
+                もう十分がんばっています。
+            </h2>
+            <div class="space-y-12 text-[12px] md:text-[13px] opacity-50 leading-[2.4] tracking-[0.2em] font-light">
+                <p>鏡を見る余裕さえない夜がある。</p>
+                <p>丁寧でありたいけれど、身体が追いつかない。</p>
+                <p>スキンケアが「タスク」になっているあなたへ。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Steps Section -->
+    <section id="steps" class="py-32 md:py-48 px-6 bg-[#FDFCF9] relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-32 text-center fade-in">
+                <p class="en text-[9px] tracking-[0.5em] opacity-30 mb-4 uppercase">EXPERIENCE</p>
+                <h2 class="text-3xl font-light mb-4">3ステップの解放</h2>
+                <p class="text-[11px] opacity-40 tracking-[0.4em]">肌にも、時間にも、やさしく</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-16 md:gap-12 text-center">
+                <!-- Step 01 -->
+                <div class="fade-in">
+                    <span class="en block mb-8 text-xl font-light opacity-20">01</span>
+                    <div class="px-10 mb-10">
+                        <div class="aspect-square rounded-full bg-stone-200 overflow-hidden shadow-inner">
+                            <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=500" alt="Cleansing" class="w-full h-full object-cover opacity-80 mix-blend-multiply">
+                        </div>
+                    </div>
+                    <h3 class="text-lg mb-2">ほどく</h3>
+                    <p class="en text-[9px] opacity-40 mb-6 tracking-widest uppercase">CLEANSING</p>
+                    <p class="text-[11px] opacity-50 leading-relaxed px-4">
+                        一日の重なりを、溶かして。メイクも疲れも、優しく浮かせて。
+                    </p>
+                </div>
+
+                <!-- Step 02 -->
+                <div class="fade-in" style="transition-delay: 0.2s;">
+                    <span class="en block mb-8 text-xl font-light opacity-20">02</span>
+                    <div class="px-10 mb-10">
+                        <div class="aspect-square rounded-full bg-stone-200 overflow-hidden shadow-inner flex items-center justify-center">
+                            <span class="en text-[10px] opacity-20 tracking-widest">MIST LOTION</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg mb-2">満たす</h3>
+                    <p class="en text-[9px] opacity-40 mb-6 tracking-widest uppercase">MIST LOTION</p>
+                    <p class="text-[11px] opacity-50 leading-relaxed px-4">
+                        深呼吸するように、水分を。目を閉じて、霧に包まれる瞬間。
+                    </p>
+                </div>
+
+                <!-- Step 03 -->
+                <div class="fade-in" style="transition-delay: 0.4s;">
+                    <span class="en block mb-8 text-xl font-light opacity-20">03</span>
+                    <div class="px-10 mb-10">
+                        <div class="aspect-square rounded-full bg-stone-200 overflow-hidden shadow-inner flex items-center justify-center">
+                            <span class="en text-[10px] opacity-20 tracking-widest">MILK</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg mb-2">包む</h3>
+                    <p class="en text-[9px] opacity-40 mb-6 tracking-widest uppercase">MILK</p>
+                    <p class="text-[11px] opacity-50 leading-relaxed px-4">
+                        うるおいを閉じ込め、朝を待つ。ベタつかず、枕を汚さない。
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-24 flex justify-end pr-6 md:pr-0 fade-in">
+                <a href="#" class="more-link en">MORE</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality Section -->
+    <section id="quality" class="py-40 md:py-60 px-6 bg-white overflow-hidden">
+        <div class="max-w-5xl mx-auto space-y-48 md:space-y-64">
+            <!-- Row 1 -->
+            <div class="grid md:grid-cols-2 gap-20 items-center fade-in">
+                <div class="order-2 md:order-1">
+                    <h4 class="text-2xl md:text-3xl mb-10 font-normal">考えることをお休みする</h4>
+                    <p class="text-sm md:text-base opacity-50 leading-[2.2] tracking-widest font-light">
+                        迷わないこと。それが一番のケア。<br>
+                        “直感的に手に取れるボトル”<br>
+                        と、馴染みの良さを追求しました。
+                    </p>
+                </div>
+                <div class="order-1 md:order-2 flex justify-center md:justify-end">
+                    <div class="w-full max-w-[340px] aspect-square rounded-full bg-stone-100 flex items-center justify-center opacity-60">
+                        <span class="en text-[10px] tracking-widest opacity-30">QUIET DESIGN</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="grid md:grid-cols-2 gap-20 items-center fade-in">
+                <div class="flex justify-center md:justify-start">
+                    <div class="w-full max-w-[340px] arch-img bg-stone-100 flex items-center justify-center opacity-60">
+                        <span class="en text-[10px] tracking-widest opacity-30">MINIMAL BOTTLE</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-2xl md:text-3xl mb-10 font-normal">空間に溶け込む佇まい</h4>
+                    <p class="text-sm md:text-base opacity-50 leading-[2.2] tracking-widest font-light">
+                        生活感を手放し、インテリアに馴染む<br>
+                        マットな質感。<br>
+                        静かな夜の景色の一部として。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative pt-60 pb-40 px-6 bg-stone-50 overflow-hidden">
+        <!-- Waves Background -->
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-0">
+            <svg viewBox="0 0 1200 240" preserveAspectRatio="none" class="relative block w-full h-[240px] fill-white opacity-40">
+                <path d="M0,120 C400,220 800,20 1200,120 L1200,0 L0,0 Z"></path>
+            </svg>
+            <svg viewBox="0 0 1200 240" preserveAspectRatio="none" class="absolute top-[-80px] left-0 block w-full h-[320px] fill-white">
+                <path d="M0,150 C300,250 900,50 1200,150 L1200,0 L0,0 Z"></path>
+            </svg>
+        </div>
+
+        <div class="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-center gap-16 md:gap-32">
+            <div class="vertical-text text-[11px] tracking-[1.2em] opacity-30 hidden md:block pt-10">
+                ほどいて、戻る時間
+            </div>
+
+            <div class="text-center fade-in">
+                <p class="en text-[10px] tracking-[0.5em] opacity-30 mb-14 uppercase">SOUFFLE Skincare</p>
+                <div class="mb-20">
+                    <a href="#" class="btn-shop-circle en mx-auto">SHOP NOW</a>
+                </div>
+                <p class="text-[11px] opacity-40 tracking-[0.4em] leading-loose">
+                    ほどいて、戻る。<br>
+                    自分だけの時間を、ここから。
+                </p>
+            </div>
+
+            <div class="vertical-text text-[11px] tracking-[1.2em] opacity-30 hidden md:block pt-10">
+                自分だけの時間を、ここから。
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 bg-stone-50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-12 md:space-y-0">
+            <div class="en text-sm tracking-[0.4em] opacity-50">Souffle</div>
+            <p class="en text-[10px] opacity-30 tracking-widest">© 2024 SOUFFLE ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script>
+        const trigger = document.getElementById('menu-trigger');
+        const overlay = document.getElementById('overlay-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function toggleMenu() {
+            trigger.classList.toggle('active');
+            overlay.classList.toggle('open');
+            document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : 'auto';
+        }
+
+        trigger.addEventListener('click', toggleMenu);
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                trigger.classList.remove('active');
+                overlay.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
