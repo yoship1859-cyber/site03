@@ -413,7 +413,7 @@ header {
 }
 
 .service-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.01);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -579,9 +579,7 @@ header {
 .case-slider-outer {
     margin-top: var(--spacing-6);
     overflow: hidden;
-    background-color: var(--gray-10);
     border-radius: var(--radius-8);
-    padding: var(--spacing-4);
 }
 
 .case-slider-track {
@@ -726,7 +724,7 @@ header {
 }
 
 .about-list a:hover {
-    transform: scale(1.05);
+    transform: scale(1.01);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -765,7 +763,7 @@ header {
 }
 
 .recruit-list a:hover {
-    transform: scale(1.05);
+    transform: scale(1.01);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -949,6 +947,7 @@ footer a {
 
 .small {
     text-align: center;
+    color: var(--color-white);
 }
 
 /* スマホ（768px以 下） */
