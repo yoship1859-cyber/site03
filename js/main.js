@@ -3,6 +3,12 @@
 // });
 
 document.addEventListener("DOMContentLoaded", () => {
+    const header = document.querySelector("header");
+    const onScroll = () => {
+        header.classList.toggle("scrolled", window.scrollY > 80);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     const targets = document.querySelectorAll(".technology-list li");
 
     const observer = new IntersectionObserver((entries) => {
@@ -156,4 +162,63 @@ const targets = document.querySelectorAll(".slide-title");
 
   targets.forEach((target) => observer.observe(target));
 
+  const caseTabs = document.querySelectorAll(".case-tab");
+  const allSlideCards = document.querySelectorAll(".case-slide-card");
 
+  function showCategory(cat) {
+    allSlideCards.forEach((card) => {
+      card.style.opacity = "0";
+    });
+
+    setTimeout(() => {
+      allSlideCards.forEach((card) => {
+        if (card.dataset.cat === cat) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      setTimeout(() => {
+        allSlideCards.forEach((card) => {
+          if (card.dataset.cat === cat) {
+            card.style.opacity = "1";
+          }
+        });
+      }, 50);
+    }, 200);
+  }
+
+  caseTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      caseTabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      showCategory(tab.dataset.cat);
+    });
+  });
+
+  showCategory("infra");
+
+  const ctaBtn = document.querySelector(".cta-btn");
+  if (ctaBtn) {
+    const contactSection = document.querySelector(".contact-wrap");
+    window.addEventListener("scroll", () => {
+      const footer = document.querySelector("footer");
+      if (!footer) return;
+      const btnRect = ctaBtn.getBoundingClientRect();
+      const footerRect = footer.getBoundingClientRect();
+      const contactRect = contactSection ? contactSection.getBoundingClientRect() : null;
+      const inContact = contactRect && btnRect.bottom > contactRect.top && btnRect.top < contactRect.bottom;
+      const inFooter = btnRect.bottom > footerRect.top;
+      if (inContact && !inFooter) {
+        ctaBtn.classList.add("hidden");
+        ctaBtn.classList.remove("on-footer");
+      } else if (inFooter) {
+        ctaBtn.classList.remove("hidden");
+        ctaBtn.classList.add("on-footer");
+      } else {
+        ctaBtn.classList.remove("hidden");
+        ctaBtn.classList.remove("on-footer");
+      }
+    });
+  }
