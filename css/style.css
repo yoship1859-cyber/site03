@@ -347,6 +347,12 @@ header {
     backdrop-filter: blur(4px);
     padding: var(--spacing-3) var(--spacing-6);
     border-top: 2px solid var(--color-cta);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.fes-notice:hover {
+    background-color: rgba(26, 43, 94, 1);
 }
 
 .fes-badge {
