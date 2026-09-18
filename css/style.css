@@ -195,7 +195,7 @@ header {
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* 背景にする */
+    /* 背景にする（fixed にしないと canvas がページ全高になり描画が破綻する） */
     pointer-events: none;
     /* 背景をクリックできなくする */
 }
@@ -711,6 +711,7 @@ header.scrolled {
 
 .banner-wrap .section-inner {
     display: flex;
+    margin-bottom: var(--spacing-16);
 }
 
 .banner-wrap .section-inner.size-m p {
@@ -723,8 +724,8 @@ header.scrolled {
 
 
 /* 企業情報、採用情報ここから */
-.about-list, .recruit-list {
-    margin-top: var(--spacing-15);
+.recruit-list {
+    margin-top: var(--spacing-10);
 
 }
 
