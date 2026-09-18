@@ -165,8 +165,8 @@
 
   /* Theme Colors (HEX) */
   --theme-color-primary: #1e00b3;
-  --theme-color-secondary: #4931ff;
-  --theme-color-tertiary: #00e0ff;
+  --theme-color-secondary: #0a10b6;
+  --theme-color-tertiary: #2047e7b3;
   --theme-color-gradient: 
   var(--theme-color-primary) 0%, 
   var(--theme-color-secondary) 50%, 
@@ -234,6 +234,16 @@
   --theme-color-blue-shadow: 0 0 20px var(--theme-color-blue-primary),
     inset 0 0 20px var(--blue-transparent-20);
 
+  /* Design Token — 配色改善 */
+  --color-navy:       #1a2b5e;
+  --color-blue:       #2563eb;
+  --color-blue-light: #eff4ff;
+  --color-text:       #333333;
+  --color-text-sub:   #666666;
+  --color-cta:        #f59e0b;
+  --color-cta-hover:  #d97706;
+  --color-white:      #ffffff;
+
   /* === Semantic Colors === */
 
   /* Theme Semantic Colors */
@@ -292,6 +302,7 @@ html {
 }
 
 body {
+  position: relative;
   max-width: 100%;
   font-family: var(--font-gothic-ja);
   font-size: var(--font-size-default);
@@ -314,7 +325,11 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--theme-color-fg);
+  color: var(--color-navy);
+}
+
+p {
+  color: var(--color-text);
 }
 
 a {
