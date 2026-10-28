@@ -340,6 +340,11 @@ header.scrolled {
     background: var(--color-navy);
 }
 
+/* 固定ヘッダーでアンカー先の見出しが隠れないようにする */
+[id] {
+    scroll-margin-top: var(--spacing-15);
+}
+
 
 .fes-wrap {
     position: absolute;
