@@ -33,15 +33,15 @@
 
             <!-- メニューボタン -->
             <!-- ↓クリックしたら発動 -->
-            <div class="btn">
+            <button type="button" class="btn" aria-label="メニューを開く" aria-expanded="false" aria-controls="global-menu">
                 <!-- ↑クラス名をjs、cssセレクタと揃える。 -->
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
             <!-- メニューボタン -->
 
-            <nav class="menu">
+            <nav class="menu" id="global-menu">
                 <!-- ↑クラス名をjs、cssセレクタと揃える。 -->
                 <ul>
                     <!-- メニューの中身 -->
@@ -372,7 +372,7 @@
             <div class="map">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.216026651735!2d139.70423887534557!3d35.696301229146826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188cdeb91dcf3f%3A0xb6ac98faf88cd44!2z44Ki44K444Oj44K544OI44Ki44Kr44OH44Of44O8!5e0!3m2!1sja!2sjp!4v1761213517046!5m2!1sja!2sjp"
-                    width="" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                    title="エアリンクテクノロジーズの所在地" height="400" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
 
@@ -388,7 +388,7 @@
                 <h2>「ドローン×データで、空から社会を支える」</h2>
             </div> -->
             <div class="adress">
-                <a href="./index.html"><img src="./images/logo.png" alt=""></a>
+                <a href="./index.html"><img src="./images/logo.png" width="96" height="96" alt="エアリンクテクノロジーズ トップへ"></a>
                 <address>〒150-0021<span class="br">東京都渋谷区恵比寿西2-8-7</span></address>
             </div>
             <nav class="footer-main-menu">
@@ -530,7 +530,9 @@
         <nav class="sns-links">
            
             <ul class="sns">
-                <a href="#x"><img src="./images/logo-white.png" width="32" height="32" alt="エックス"></a>
+                <li>
+                    <a href="#x"><img src="./images/logo-white.png" width="32" height="32" alt="エックス"></a>
+                </li>
             </ul>
             <ul class="sns">
                 <li>

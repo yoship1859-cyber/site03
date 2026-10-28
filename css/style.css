@@ -20,6 +20,8 @@ html {
     /* ボタンの色 任意で変更*/
     padding: var(--spacing-1);
     /* ボタンとバーガーの余白 */
+    border: none;
+    /* buttonタグの既定の枠線を消す */
     border-radius: var(--radius-2);
     cursor: pointer;
     /* マウスオーバー時のカーソルを指にできるがタブレット、スマホで閲覧時のみのボタンであれば不要 */

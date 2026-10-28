@@ -26,15 +26,15 @@
 
             <!-- メニューボタン -->
             <!-- ↓クリックしたら発動 -->
-            <div class="btn">
+            <button type="button" class="btn" aria-label="メニューを開く" aria-expanded="false" aria-controls="global-menu">
                 <!-- ↑クラス名をjs、cssセレクタと揃える。 -->
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
             <!-- メニューボタン -->
 
-            <nav class="menu">
+            <nav class="menu" id="global-menu">
                 <!-- ↑クラス名をjs、cssセレクタと揃える。 -->
                 <ul>
                     <!-- メニューの中身 -->
@@ -50,7 +50,7 @@
                 </ul>
             </nav>
             <div class="hero-logo">
-                <h1><a href="./index.html"><img src="./images/logo.png" width="96" height="96" alt="">
+                <h1><a href="./index.html"><img src="./images/logo.png" width="96" height="96" alt="エアリンクテクノロジーズのロゴ">
                     </a></h1>
             </div>
             <nav class="menu-list">
@@ -141,7 +141,7 @@
     <footer>
         <div class="footer-wrap">
             <div class="adress">
-                <a href="./index.html"><img src="./images/logo.png" width="96" height="96" alt=""></a>
+                <a href="./index.html"><img src="./images/logo.png" width="96" height="96" alt="エアリンクテクノロジーズ トップへ"></a>
                 <address>〒150-0021<span class="br">東京都渋谷区恵比寿西2-8-7</span></address>
             </div>
             <nav class="footer-main-menu">
@@ -283,10 +283,12 @@
         </div>
         <nav class="sns-links">
             <ul class="sns">
-                <a href="#x"><img src="./images/logo-white.png" width="32" height="32" alt="エックス"></a>
+                <li>
+                    <a href="#x"><img src="./images/logo-white.png" width="32" height="32" alt="エックス"></a>
+                </li>
             </ul>
             <ul class="sns">
-                <li class="youtube">
+                <li>
                     <a href="#x"><img src="./images/instagram_.png" width="32" height="32" alt="インスタグラム"></a>
                 </li>
             </ul>
