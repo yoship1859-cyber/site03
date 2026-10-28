@@ -313,7 +313,7 @@ header {
     justify-content: center;
 }
 
-.hero-visual p {
+.hero-visual > p {
     font-size: var(--font-size-72);
     font-weight: var(--font-weight-bold);
     color: var(--theme-color-fg-inverse);
@@ -987,7 +987,7 @@ footer a {
     }
 
 
-    .hero-visual p {
+    .hero-visual > p {
         font-size: var(--font-size-36);
         margin-top: 70%;
     }
@@ -1099,6 +1099,14 @@ footer a {
 
     .bg-title {
         font-size: var(--font-size-48);
+    }
+
+    .technology-page section {
+        margin: var(--spacing-6) var(--spacing-2);
+    }
+
+    .technology-page h3 {
+        font-size: var(--font-size-24);
     }
 
 }
